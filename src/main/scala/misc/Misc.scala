@@ -12,6 +12,8 @@ object Misc {
     {
       if (!list.isEmpty)
         list.contains(elem)
+      else
+        false
     }
 
   /**
@@ -40,7 +42,7 @@ object Misc {
    */
 
   def main(args: Array[String]) {
-    var a = 0
+    /**var a = 0
     val numList = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
     // for loop execution with a yield
@@ -54,7 +56,9 @@ object Misc {
     // Now print returned values using another loop.
     for (a <- retVal) {
       println("Value of a: " + a)
-    }
+    }*/
+    
+    primeTuple(11)
   }
 
   // E X A M P L E S   B A S I C S
@@ -63,7 +67,11 @@ object Misc {
    * Exercice 2
    * Ecrire une fonction qui renvoie la liste du reste de la divison par 3 des termes d'une liste
    */
-  def modulus(myList: List[Int]): List[Int] = ???
+  def modulus(myList: List[Int]): List[Int] = {
+      for {
+        a <- myList
+      } yield a % 3
+  }
 
   /**
    * Exercice 3
@@ -73,7 +81,15 @@ object Misc {
    */
   def isPrime(n: Int) = List.range(2, n).forall(x => n % x != 0)
 
-  def primeTuple(n: Int): List[(Int, Int)] = ???
+  def primeTuple(n: Int): List[(Int, Int)] = {
+    for {
+      x <- (1 to n-1).toList
+      y <- (1 to n-1).toList
+      if x + y != 2
+      if y < x
+      if isPrime(x+y)
+    } yield (x, y)
+  }
 
   // E X A M P L E S   O V E R   S C A L A    A R R A Y
 
@@ -96,13 +112,25 @@ object Misc {
    * Exercice 4
    * Ecrire une fonction et son test associe qui renvoie la liste des hommes
    */
-  def listMale(persons: List[Person]): List[Person] = ???
+  def listMale(persons: List[Person]): List[Person] = {
+    for {
+      person <- persons
+      if person.isMale
+    } yield person
+  }
 
   /**
    * Exercice 5
    * Ecrire une fonction et son test associe qui renvoie la list des enfants pour une personne donnee
    */
-  def childrenOf(persons: List[Person], prenom: String): List[Person] = ???
+  def childrenOf(persons: List[Person], prenom: String): List[Person] = {
+    for {
+      person <- persons
+      if person.prenom == prenom
+      if !person.enfants.isEmpty
+        enfant <- person.enfants
+    } yield enfant
+  }
 
   /**
    * Exercice 6
@@ -118,6 +146,8 @@ object Misc {
     Book("Introduction to Functional Programming", List("Bird, Richard")),
     Book("The Java Language Specification", List("Gosling, James", "Joy, Bill", "Steele, Guy", "Bracha, Gilad")))
 
+    
+ def bookWhere(
   /**
    * Accès aux éléments d'un n-uplet
    * Vous pouvez accéder aux éléments d'un n-uplet en utilisant une syntaxe de soulignement.
